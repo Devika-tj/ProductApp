@@ -36,9 +36,15 @@ const Home = () => {
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               {product.description}
             </Typography>
+            <Typography variant="body2" sx={{ color: 'black', textAlign: 'justify' }}>Status:</Typography>
+            <Typography variant="body2" sx={{color: product.status === 'unavailable' ? 'red' : 'green', textAlign: 'justify'
+  }}
+>
+  {product.status === 'unavailable' ? 'Unavailable' : 'Available'}
+</Typography>
+
           </CardContent>
-          <p style={{ color: 'black', textAlign: 'justify' }}>Status:</p>
-          <p style={{ color: 'green', textAlign: 'justify' }}>Available</p>
+          
           <CardActions>
             <Button variant="contained" style={{ backgroundColor: '#040305ff' }}>Add to Cart</Button>
             <Button variant="contained" style={{ backgroundColor: '#000000ff' }}>Buy Now</Button>

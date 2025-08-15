@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -18,14 +18,14 @@ const Login = () => {
     axios.post("http://localhost:3000/user/login", form)
       .then((res) => {
         alert(res.data.message);
-        if (res.data.message === 'login successful') {
-          navigate('/blogs');
+        if (res.data.message === 'Login successful') {
+          navigate('/');
         }
       })
       .catch((err) => {
         console.error(err);
         alert("Invalid credentials or server error");
-        navigate('/');
+        navigate('login');
       });
   }
 

@@ -20,6 +20,16 @@ const Home = () => {
       });
   }, []); 
 
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/products/delete/${id}`);
+      setProducts(prevproducts => prevproducts.filter(product => product._id !== id));
+    } catch (err) {
+      console.error('Failed to delete blog:', err);
+    }
+  };
+
+
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', marginTop: '20px' }}>
       {products.map((product, index) => (
@@ -48,6 +58,7 @@ const Home = () => {
           <CardActions>
             <Button variant="contained" style={{ backgroundColor: '#040305ff' }}>Add to Cart</Button>
             <Button variant="contained" style={{ backgroundColor: '#000000ff' }}>Buy Now</Button>
+            <Button size="small" onClick={() => handleDelete(blog._id)}>Delete</Button>
           </CardActions>
         </Card>
       ))}

@@ -1,6 +1,19 @@
 const express=require('express')
 const router= express.Router();
 const productSchema = require('../models/productdata');
+const jwt=require('jsonwebtoken')
+
+function verifyToken(req,res,next){
+  let token=req.headers.token
+  try{
+    if(!token)throw 'Unauthorized Access'
+    let payload=jwt.verify(token,"secret")
+    if(!payload) throw 'Unauthorized Access'
+    next()
+  }catch(err){
+    res.json({message:err})
+  }
+  }
 
 router.get('/', async (req, res) => {
   try {
@@ -10,7 +23,7 @@ router.get('/', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch products' });
   }
 });
-router.post("/add", async (req, res) => {
+router.post("/add", verifyToken,async (req, res) => {
   try {
     const newProduct = new productSchema(req.body); 
     await newProduct.save();
@@ -19,7 +32,7 @@ router.post("/add", async (req, res) => {
     res.status(500).json({ error: 'Failed to add product' });
   }
 });
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id',verifyToken, async (req, res) => {
   try {
     const deletedProduct = await blogSchema.findByIdAndDelete(req.params.id);
     if (!deletedProduct) {
@@ -32,9 +45,9 @@ router.delete('/delete/:id', async (req, res) => {
 });
 
 // PUT
-router.put('/update/:id', async (req, res) => {
+router.put('/update/:id',verifyToken, async (req, res) => {
   try {
-    const updatedProduct = await blogSchema.findByIdAndUpdate(
+    const updatedProduct = await productSchema.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true, runValidators: true }

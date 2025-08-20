@@ -1,40 +1,53 @@
-import  { useState } from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [form, setForm] = useState({
     username: "",
     email: "",
-    password: ""
+    password: "",
   });
+
   const navigate = useNavigate();
 
   function capValue(e) {
     e.preventDefault();
-    axios.post("http://localhost:3000/user/login", form)
+
+    console.log("Form Data Sent:", form); 
+
+    axios
+      .post("http://localhost:5000/user/login", form) 
       .then((res) => {
+        console.log("Response from backend:", res.data); 
         alert(res.data.message);
-        if (res.data.message === 'Login successful') {
-          navigate('/');
+        if (res.data.message === "Login successful") {
+          navigate("/");
         }
       })
       .catch((err) => {
-        console.error(err);
-        alert("Invalid credentials or server error");
-        navigate('login');
+        if (err.response) {
+          
+          console.error("Backend error:", err.response.data);
+          alert(err.response.data.message);
+        } else {
+         
+          console.error("Network/Server error:", err.message);
+          alert("Server not reachable");
+        }
+        navigate("/login");
       });
   }
 
   return (
-    <div style={{ textAlign: 'center' }}>
-      <h2 style={{ fontFamily: 'serif', fontStyle: 'oblique' }}>LOGIN</h2>
+    <div style={{ textAlign: "center" }}>
+      <h2 style={{ fontFamily: "serif", fontStyle: "oblique" }}>LOGIN</h2>
       <Box
         component="form"
-        sx={{ '& > :not(style)': { m: 1, width: '35ch' } }}
+        sx={{ "& > :not(style)": { m: 1, width: "35ch" } }}
         noValidate
         autoComplete="off"
       >
@@ -60,7 +73,11 @@ const Login = () => {
           variant="outlined"
         />
         <br />
-        <Button onClick={capValue} variant="contained" style={{ backgroundColor: '#543377ff' }}>
+        <Button
+          onClick={capValue}
+          variant="contained"
+          style={{ backgroundColor: "#543377ff" }}
+        >
           LOGIN
         </Button>
       </Box>

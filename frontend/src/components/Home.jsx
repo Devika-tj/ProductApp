@@ -11,7 +11,7 @@ const Home = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/products")
+    axios.get("http://localhost:5000/products")
       .then((res) => {
         setProducts(res.data);
       })
@@ -22,7 +22,7 @@ const Home = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/products/delete/${id}`);
+      await axios.delete(`http://localhost:5000/products/delete/${id}`);
       setProducts(prevproducts => prevproducts.filter(product => product._id !== id));
     } catch (err) {
       console.error('Failed to delete blog:', err);

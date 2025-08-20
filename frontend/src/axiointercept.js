@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const axiosinstance=axios.create({
-    baseURL:"http://localhost:3000"
+    baseURL:"http://localhost:5000"
 })
 axiosinstance.interceptors.request.use((config)=>{
     const accessToken=localStorage.getItem("token")

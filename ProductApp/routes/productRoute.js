@@ -32,7 +32,11 @@ router.post("/add", verifyToken,async (req, res) => {
     res.status(500).json({ error: 'Failed to add product' });
   }
 });
+<<<<<<< HEAD
 router.delete('/delete/:id',verifyToken, async (req, res) => {
+=======
+router.delete('/delete/:id', async (req, res) => {
+>>>>>>> 33d1279b0e11cf04a788b1abfdaf908c2a0467da
   try {
     const deletedProduct = await blogSchema.findByIdAndDelete(req.params.id);
     if (!deletedProduct) {
@@ -45,9 +49,15 @@ router.delete('/delete/:id',verifyToken, async (req, res) => {
 });
 
 // PUT
+<<<<<<< HEAD
 router.put('/update/:id',verifyToken, async (req, res) => {
   try {
     const updatedProduct = await productSchema.findByIdAndUpdate(
+=======
+router.put('/update/:id', async (req, res) => {
+  try {
+    const updatedProduct = await blogSchema.findByIdAndUpdate(
+>>>>>>> 33d1279b0e11cf04a788b1abfdaf908c2a0467da
       req.params.id,
       req.body,
       { new: true, runValidators: true }
@@ -60,7 +70,10 @@ router.put('/update/:id',verifyToken, async (req, res) => {
     res.status(500).json({ error: 'Failed to update Product' });
   }
 });
+<<<<<<< HEAD
 
+=======
+>>>>>>> 33d1279b0e11cf04a788b1abfdaf908c2a0467da
 
 
 module.exports = router;

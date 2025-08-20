@@ -6,9 +6,13 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate(); 
+  let token=localStorage.getItem('token')
+
 
   useEffect(() => {
     axios.get("http://localhost:5000/products")
@@ -25,8 +29,11 @@ const Home = () => {
       await axios.delete(`http://localhost:5000/products/delete/${id}`);
       setProducts(prevproducts => prevproducts.filter(product => product._id !== id));
     } catch (err) {
-      console.error('Failed to delete blog:', err);
+      console.error('Failed to delete product:', err);
     }
+  };
+  const updateproduct = (product) => {
+    navigate('/add', { state: { product } }); 
   };
 
 
@@ -58,7 +65,13 @@ const Home = () => {
           <CardActions>
             <Button variant="contained" style={{ backgroundColor: '#040305ff' }}>Add to Cart</Button>
             <Button variant="contained" style={{ backgroundColor: '#000000ff' }}>Buy Now</Button>
-            <Button size="small" onClick={() => handleDelete(blog._id)}>Delete</Button>
+              {token &&(
+              <>
+            <Button size="small" onClick={() => updateproduct(product)}>Update</Button>
+            
+            <Button size="small" onClick={() => handleDelete(product._id)}>Delete</Button>
+             </>
+          )}
           </CardActions>
         </Card>
       ))}

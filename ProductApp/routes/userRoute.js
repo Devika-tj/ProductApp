@@ -21,7 +21,8 @@ router.post("/login", async (req, res) => {
 };
 
       const token=jwt.sign(payload,"secret")
-      res.json({success:true,message:"Logined sucussfully",usertoken:token})
+      return res.json({success:true,message:"Logined sucussfully", usertoken:token})
+     
    
     }
   } catch (error) {

@@ -5,6 +5,7 @@ import Home from './components/Home'
 import Add from './components/Add'
 import { Route } from 'react-router-dom'
 import { Routes } from 'react-router-dom'
+import Loginsuccessful from './components/Loginsuccessful'
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path='/' element={<Home/>}></Route>
         <Route path='add' element={<Add/>}></Route>
         <Route path='login' element={<Login/>}></Route>
+        <Route path='/login-success' element={<Loginsuccessful/>}></Route>
        </Routes>
       
     </div>

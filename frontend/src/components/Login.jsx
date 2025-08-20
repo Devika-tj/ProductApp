@@ -19,13 +19,12 @@ const Login = () => {
 
     console.log("Form Data Sent:", form); 
 
-    axios
-      .post("http://localhost:5000/user/login", form) 
+    axios.post("http://localhost:5000/user/login", form) 
       .then((res) => {
         console.log("Response from backend:", res.data); 
         alert(res.data.message);
         if (res.data.message === "Login successful") {
-          navigate("/");
+          navigate('/login-success');
         }
       })
       .catch((err) => {
@@ -38,7 +37,7 @@ const Login = () => {
           console.error("Network/Server error:", err.message);
           alert("Server not reachable");
         }
-        navigate("/login");
+        navigate('login');
       });
   }
 
